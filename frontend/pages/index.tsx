@@ -1,8 +1,9 @@
 import React from "react";
 import Login from "./login";
+import Questionnaire from "./questionnaire";
 
 const index = () => {
-  return <Login />;
+  return <Questionnaire />;
 };
 
 export default index;
