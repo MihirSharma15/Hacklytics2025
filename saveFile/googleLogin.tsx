@@ -1,7 +1,7 @@
 import { auth } from "../firebase-safe";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-const Login = () => {
+const GoogleLogin = () => {
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
@@ -15,4 +15,4 @@ const Login = () => {
   return <button onClick={handleGoogleLogin}>Sign in with Google</button>;
 };
 
-export default Login;
+export default GoogleLogin;
