@@ -1,10 +1,11 @@
 import React from "react";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import { Button } from "@/components/ui/button";
-import { c } from "node_modules/framer-motion/dist/types.d-6pKw1mTI";
 import { useRouter } from "next/router";
 
 export default function LandingPage() {
+  const router = useRouter(); // Correct placement of useRouter
+
   return (
     <>
       <div className="w-full h-screen flex flex-col items-center justify-center">
@@ -14,12 +15,10 @@ export default function LandingPage() {
       </div>
       <Button
         onClick={() => {
-          const router = useRouter();
           router.push("/loginPage");
         }}
       >
-        {" "}
-        Discover clarity{" "}
+        Discover clarity
       </Button>
     </>
   );
