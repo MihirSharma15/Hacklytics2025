@@ -14,7 +14,8 @@ import {
   signInWithPopup,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth } from "../../firebase-safe"; // Ensure this is properly configured
+import { auth, db } from "../../firebase-safe"; // Ensure this is properly configured
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function LoginForm({
   className,
@@ -38,10 +39,34 @@ export default function LoginForm({
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // If already logged in, push to dashboard
-        router.push("/dashboard");
+        const userRef = doc(db, "users", user.uid); // Reference to the user's Firestore document
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+          // Check if the specific field exists
+          const fieldExists = userDoc.data().demographicQuestions; // Replace 'yourFieldName' with the field you're checking
+
+          if (fieldExists) {
+            router.push("/dashboard"); // Redirect to dashboard if field exists
+          } else {
+            router.push("/questionnaire"); // Redirect to questionnaire if field doesn't exist
+          }
+        } else {
+          console.error("User document does not exist");
+
+          // Add a new document with default values
+          await setDoc(userRef, {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            createdAt: new Date(), // Optionally, add a timestamp
+          });
+
+          // Redirect the user to the questionnaire page after creating the document
+          router.push("/questionnaire");
+        }
       }
     });
 
