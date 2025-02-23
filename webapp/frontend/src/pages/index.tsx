@@ -1,17 +1,21 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-import LoginPage from "@/app/login/page";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase-safe";
 
 export default function Home() {
-  return <LoginPage />;
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push("/dashboard");
+      } else {
+        router.push("/loginPage");
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
+  return <div>Loading...</div>;
 }
