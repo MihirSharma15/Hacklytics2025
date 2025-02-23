@@ -58,7 +58,7 @@ export default function EmploymentForm({ onNext, onBack }: EmploymentFormProps) 
 
             <div className="flex justify-between mt-8">
                 <Button variant="outline" onClick={onBack} className="w-1/3">Back</Button>
-                <Button onClick={() => onNext(employment)} className="w-1/3 bg-indigo-900">Next</Button>
+                <Button onClick={() => onNext(employment)} className="w-1/3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition-all duration-300">Next</Button>
             </div>
         </div>
     );
