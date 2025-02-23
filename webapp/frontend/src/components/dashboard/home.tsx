@@ -60,7 +60,7 @@ export default function Home() {
                         </div>
 
                         <div className="flex flex-col aspect-video rounded-xl bg-muted/50 p-4 gap-3">
-                            <button className="bg-indigo-900 text-white rounded-lg py-2 font-medium">Submit new claim</button>
+                            <button className="bg-gradient-to-r from-blue-500 to-purple-500 font-bold hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition-all duration-300 text-white rounded-lg py-2 font-medium">Submit new claim</button>
                             {["Claim One", "Claim Two"].map((claim, index) => (
                                 <button
                                     key={claim}

@@ -114,7 +114,10 @@ export default function DemographicsForm({ onNext }: DemographicsFormProps) {
         </div>
       </div>
 
-      <Button onClick={handleSubmit} className="w-full mt-8 py-3 bg-indigo-900">
+      <Button
+        onClick={handleSubmit}
+        className="w-full mt-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold h-12 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition-all duration-300"
+      >
         Next
       </Button>
     </div>

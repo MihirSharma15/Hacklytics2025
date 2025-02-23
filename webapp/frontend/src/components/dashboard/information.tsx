@@ -331,7 +331,10 @@ export default function Information() {
       </Tabs>
 
       <div className="flex justify-center">
-        <Button className="w-32 bg-indigo-900" onClick={handleSave}>
+        <Button
+          className="w-32 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition-all duration-300"
+          onClick={handleSave}
+        >
           Save Changes
         </Button>
       </div>

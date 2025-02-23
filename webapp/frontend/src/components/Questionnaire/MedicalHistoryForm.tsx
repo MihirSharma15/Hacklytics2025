@@ -98,11 +98,11 @@ export default function MedicalHistoryForm({ onNext, onBack }: MedicalHistoryFor
                     Back
                 </Button>
                 {currentQuestionIndex < questions.length - 1 ? (
-                    <Button onClick={handleNext} className="w-32 bg-indigo-900">
+                    <Button onClick={handleNext} className="w-32 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition-all duration-300">
                         Next
                     </Button>
                 ) : (
-                    <Button onClick={handleNext} className="w-32 bg-indigo-900">
+                    <Button onClick={handleNext} className="w-32 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition-all duration-300">
                         Submit
                     </Button>
                 )}
