@@ -21,23 +21,14 @@ class PlanList(BaseModel):
     plan_list: list[Plan]
     
 class Demographics(BaseModel):
-    age: int
-    gender: Literal["MALE", "FEMALE", "OTHER"]
-    family_size: int 
-    yearly_income: float
-    employment: Literal["STUDENT", "EMPLOYED", "UNEMPLOYED"]
-    employer_offers_insurance: bool
-    state: str
-    chronic_conditions: List[str]
-    num_er_trips: int
-    isDiabetic: bool 
-    num_hospital_trips: int 
-    isSmoker: bool
-    isHardDrugs: bool
-    bmi: float
-    medicare_eligible: bool
-    medicaid_eligible: bool
-    any_prescriptions: List[str]
+    employer: Optional[str]
+    jobTitle: Optional[str]
+    annualIncome: Optional[str]
+    name: Optional[str]
+    dateOfBirth: Optional[str]
+    gender: Optional[str]
+    state: Optional[str]
+    familySize: Optional[int]
 
 class User(BaseModel):
     uid: str = Field(default="")
