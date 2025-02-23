@@ -1,14 +1,23 @@
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 interface DemographicsFormProps {
     onNext: (demographics: DemographicsData) => void;
 }
 
 export interface DemographicsData {
-    name: string;
-    dateOfBirth: string;
-    gender: string;
-    race: string;
+    name?: string;
+    dateOfBirth?: string;
+    gender?: string;
+    state?: string;
 }
 
 export default function DemographicsForm({ onNext }: DemographicsFormProps) {
@@ -16,10 +25,12 @@ export default function DemographicsForm({ onNext }: DemographicsFormProps) {
         name: "",
         dateOfBirth: "",
         gender: "",
-        race: "",
+        state: "",
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         const { name, value } = e.target;
         setDemographics((prev) => ({ ...prev, [name]: value }));
     };
@@ -29,51 +40,54 @@ export default function DemographicsForm({ onNext }: DemographicsFormProps) {
     };
 
     return (
-        <div className="p-4 border rounded-2xl shadow-lg max-w-md mx-auto">
-            <h2 className="text-xl font-semibold mb-4">Basic Demographics</h2>
-            <div className="space-y-4">
-                <input
+        <div className="w-full p-6 rounded-2xl max-w-md mx-auto">
+            <h2 className="text-2xl font-semibold mb-6">Basic Demographics</h2>
+            <div className="space-y-5">
+                <Input
                     type="text"
                     name="name"
                     placeholder="Full Name"
                     value={demographics.name}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded-xl"
                 />
 
-                <input
+                <Input
                     type="date"
                     name="dateOfBirth"
                     value={demographics.dateOfBirth}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded-xl"
                 />
 
-                <select
-                    name="gender"
+                <Select
                     value={demographics.gender}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-xl"
+                    onValueChange={(value) =>
+                        setDemographics((prev) => ({ ...prev, gender: value }))
+                    }
                 >
-                    <option value="" disabled>Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Non-binary">Non-binary</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
-                    <option value="Other">Other</option>
-                </select>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select Gender" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="Male">Male</SelectItem>
+                        <SelectItem value="Female">Female</SelectItem>
+                        <SelectItem value="Non-binary">Non-binary</SelectItem>
+                        <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                </Select>
 
-                <input
+                <Input
                     type="text"
-                    name="race"
-                    placeholder="Race (e.g., Asian, Black, White, etc.)"
-                    value={demographics.race}
+                    name="state"
+                    placeholder="State"
+                    value={demographics.state}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded-xl"
                 />
             </div>
 
-            <button onClick={handleSubmit} className="w-full mt-6">Next</button>
+            <Button onClick={handleSubmit} className="w-full mt-8 py-3 bg-indigo-900">
+                Next
+            </Button>
         </div>
     );
 }
