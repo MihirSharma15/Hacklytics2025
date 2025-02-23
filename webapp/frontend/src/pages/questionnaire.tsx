@@ -3,14 +3,12 @@ import { useRouter } from "next/router";
 import DemographicsForm, { DemographicsData } from "@/components/Questionnaire/DemographicsForm";
 import EmploymentForm, { EmploymentData } from "@/components/Questionnaire/EmploymentForm";
 import MedicalHistoryForm from "@/components/Questionnaire/MedicalHistoryForm";
-import DependentsForm, { DependentData } from "@/components/Questionnaire/DependentsForm";
 
 export default function Questionnaire() {
     const [step, setStep] = useState<"demographics" | "employment" | "medicalHistory" | "dependents">("demographics");
     const [demographicsData, setDemographicsData] = useState<DemographicsData | null>(null);
     const [employmentData, setEmploymentData] = useState<EmploymentData | null>(null);
     const [medicalHistoryAnswers, setMedicalHistoryAnswers] = useState<Record<number, string>>({});
-    const [dependents, setDependents] = useState<DependentData[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -20,7 +18,6 @@ export default function Questionnaire() {
             setDemographicsData(parsedData.demographics || null);
             setEmploymentData(parsedData.employment || null);
             setMedicalHistoryAnswers(parsedData.medicalHistory || {});
-            setDependents(parsedData.dependents || []);
         }
     }, []);
 
@@ -28,7 +25,6 @@ export default function Questionnaire() {
         demographics?: DemographicsData;
         employment?: EmploymentData;
         medicalHistory?: Record<number, string>;
-        dependents?: DependentData[];
     }) => {
         const existingData = localStorage.getItem("questionnaireData");
         const parsedData = existingData ? JSON.parse(existingData) : {};
@@ -52,12 +48,6 @@ export default function Questionnaire() {
     const handleMedicalHistoryNext = (answers: Record<number, string>) => {
         setMedicalHistoryAnswers(answers);
         saveToLocalStorage({ medicalHistory: answers });
-        setStep("dependents");
-    };
-
-    const handleDependentsNext = (dependentsData: DependentData[]) => {
-        setDependents(dependentsData);
-        saveToLocalStorage({ dependents: dependentsData });
         router.push("/dashboard");
     };
 
@@ -69,9 +59,6 @@ export default function Questionnaire() {
             )}
             {step === "medicalHistory" && (
                 <MedicalHistoryForm onNext={handleMedicalHistoryNext} onBack={() => setStep("employment")} />
-            )}
-            {step === "dependents" && (
-                <DependentsForm onNext={handleDependentsNext} onBack={() => setStep("medicalHistory")} />
             )}
         </div>
     );
