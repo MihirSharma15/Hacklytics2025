@@ -1,13 +1,4 @@
 import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
-import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
@@ -28,10 +19,6 @@ export default function Home() {
     return (
         <SidebarProvider>
             <SidebarInset>
-                {/**
-                 * Added a Shadcn Select component to allow the user to select one of the suggested plans. 
-                 * When a plan is selected, the state updates and all related data below reflects the selected plan.
-                 */}
                 <div className="flex flex-1 flex-col gap-4 p-4">
                     <div className="w-full max-w-sm">
                         <Select
@@ -55,10 +42,6 @@ export default function Home() {
                     </div>
 
                     <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                        {/**
-                         * These divs display data based on the selected insurance plan.
-                         * Replace placeholder divs with actual data visuals or details (e.g., coverage summary, deductible info, etc.).
-                         */}
                         <div className="aspect-video rounded-xl bg-muted/50 flex items-center justify-center text-center">
                             <p>{selectedPlan.name} Coverage Overview</p>
                         </div>
@@ -72,10 +55,6 @@ export default function Home() {
 
                     <div className="grid gap-4 md:grid-cols-2">
                         <div className="aspect-video rounded-xl bg-muted/50 flex flex-col items-center justify-center p-4">
-                            {/**
-                             * This section suggests how much the user should set aside monthly for insurance and medical emergencies 
-                             * based on the selected plan. Replace with dynamic calculations if available.
-                             */}
                             <p className="text-lg font-semibold">Monthly Budget Recommendation</p>
                             <p className="text-2xl">${(selectedPlan.id * 50 + 100).toFixed(2)}</p>
                         </div>

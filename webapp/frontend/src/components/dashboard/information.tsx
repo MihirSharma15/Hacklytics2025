@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"; // Importing RadioGroup components
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { DemographicsData } from "@/components/Questionnaire/DemographicsForm";
 import { EmploymentData } from "@/components/Questionnaire/EmploymentForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -69,7 +69,6 @@ export default function Information() {
     return (
         <div className="min-h-screen p-6 max-w-4xl mx-auto space-y-8">
             <Tabs defaultValue="demographics" className="space-y-8">
-                {/* Demographics Tab */}
                 <TabsList className="flex space-x-4 mb-6">
                     <TabsTrigger value="demographics">Demographics</TabsTrigger>
                     <TabsTrigger value="employment">Employment</TabsTrigger>
@@ -122,7 +121,6 @@ export default function Information() {
                     </section>
                 </TabsContent>
 
-                {/* Employment Tab */}
                 <TabsContent value="employment">
                     <section className="p-4 rounded-2xl">
                         <h2 className="text-2xl font-semibold mb-4">Employment Information</h2>
