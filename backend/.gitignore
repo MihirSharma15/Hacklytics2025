@@ -13,3 +13,7 @@ app/env/firebaseServiceKey.json
 ../.DS_Store
 ../.env
 ../firebaseServiceKey.json
+
+app/services/.env
+*.env 
+*/.env

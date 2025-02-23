@@ -1,11 +1,14 @@
 import os
 import glob
+from dotenv import load_dotenv
 import pandas as pd
 import openai
 import pinecone
 import uuid
 from pydantic import BaseModel
 from app.schemas.users_schema import PlanList
+
+load_dotenv()
 
 # API keys
 PINECONE_API_KEY = os.getenv("PINEKEY")
