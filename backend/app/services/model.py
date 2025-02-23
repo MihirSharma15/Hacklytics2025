@@ -146,9 +146,9 @@ def ask_chatgpt(statement: str) -> str:
 
 
 
+
 # Run the script
 if __name__ == "__main__":
     response = ask_chatgpt("Give me the best healthcare plans for an elderly patient")
-    print(response)
 
 

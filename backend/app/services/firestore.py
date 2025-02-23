@@ -89,3 +89,30 @@ def get_budget_from_plan(uid: str) -> Optional[Budget]:
         return user.active_plan.budget
     return None
 
+def update_user_plans(uid: str, plans: List[Plan]) -> None:
+    """
+    Update the user's document in Firestore by setting the rec_plans to the given
+    list of Plans and the active_plan to the first Plan in that list.
+    
+    :param uid: The Firestore user document ID (user's UID).
+    :param plans: A list of Plan objects.
+    """
+    if not plans:
+        # You might handle the empty list case differently depending on your needs:
+        # - raise an error
+        # - remove the existing plans
+        # - or simply exit
+        print("No plans provided; cannot set rec_plans or active_plan.")
+        return
+
+    doc_ref = db.collection("users").document(uid)
+    
+    # Convert Pydantic models to dictionaries for Firestore.
+    data_to_update = {
+        "rec_plans": [plan.model_dump() for plan in plans],
+        "active_plan": plans[0].model_dump()
+    }
+    
+    # Use merge=True if you want to update these fields without overwriting
+    # other fields in the user document.
+    doc_ref.set(data_to_update, merge=True)
