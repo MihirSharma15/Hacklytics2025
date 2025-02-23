@@ -4,6 +4,8 @@ import pandas as pd
 import openai
 import pinecone
 import uuid
+from pydantic import BaseModel
+from app.schemas.users_schema import PlanList
 
 # API keys
 PINECONE_API_KEY = os.getenv("PINEKEY")
@@ -127,26 +129,17 @@ def ask_chatgpt(statement: str) -> str:
     prompt = f"Use the following retrieved healthcare plans to answer the user's question:\n\n{context}\n\nQuestion: {statement}"
 
     # Query ChatGPT with context
-    response = openai.chat.completions.create(
+    response = openai.beta.chat.completions.parse(
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": """You are an expert in healthcare plan recommendations. 
             Use the retrieved healthcare plan details to help generate 3 recommended plans structured in JSON format
-            based on user's details.
-            Your response must follow this format:
-
-            {
-                "question": "<user_question>",
-                "recommended_plans": [
-                    {
-                        "plan_name": 
-                    }
-                ]
-            }
-            Only return a valid JSON response. Do not add any extra text.
+            based on user's details. In the description, include pros and cons of coverage, costs, etc. Make sure you validate estimated
+            yearly costs online.
             """},
             {"role": "user", "content": prompt}
-        ]
+        ],
+        response_format=PlanList,
     )
 
     return response.choices[0].message.content
@@ -155,7 +148,7 @@ def ask_chatgpt(statement: str) -> str:
 
 # Run the script
 if __name__ == "__main__":
-    response = ask_chatgpt("help me understand ?")
+    response = ask_chatgpt("Give me the best healthcare plans for an elderly patient")
     print(response)
 
 

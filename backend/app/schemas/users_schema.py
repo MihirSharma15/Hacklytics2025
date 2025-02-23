@@ -16,6 +16,9 @@ class Plan(BaseModel):
     name: str
     description: str
     budget: Budget
+
+class PlanList(BaseModel):
+    plan_list: list[Plan]
     
 class Demographics(BaseModel):
     age: int
