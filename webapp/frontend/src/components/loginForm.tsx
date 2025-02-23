@@ -23,49 +23,49 @@ export default function LoginForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [jwt, setJwt] = useState<string | null>(null); // Store JWT for later use
 
   const handleGoogleLogin = async () => {
-    setLoading(true); // Start loading when login is attempted
+    setLoading(true);
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      // After login completes, push to dashboard
       router.push("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const userRef = doc(db, "users", user.uid); // Reference to the user's Firestore document
+        const userRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userRef);
 
         if (userDoc.exists()) {
-          // Check if the specific field exists
-          const fieldExists = userDoc.data().demographicQuestions; // Replace 'yourFieldName' with the field you're checking
-
-          if (fieldExists) {
-            router.push("/dashboard"); // Redirect to dashboard if field exists
-          } else {
-            router.push("/questionnaire"); // Redirect to questionnaire if field doesn't exist
-          }
+          const fieldExists = userDoc.data().demographicQuestions;
+          router.push(fieldExists ? "/dashboard" : "/questionnaire");
         } else {
           console.error("User document does not exist");
-
-          // Add a new document with default values
           await setDoc(userRef, {
             uid: user.uid,
             email: user.email,
             displayName: user.displayName,
-            createdAt: new Date(), // Optionally, add a timestamp
+            createdAt: new Date(),
           });
-
-          // Redirect the user to the questionnaire page after creating the document
           router.push("/questionnaire");
+        }
+
+        // Get JWT token
+        try {
+          const token = await user.getIdToken();
+          setJwt(token); // Store JWT in state
+          localStorage.setItem("jwt", token);
+          console.log("JWT Token:", token);
+        } catch (error) {
+          console.error("Error retrieving token:", error);
         }
       }
     });
