@@ -81,7 +81,7 @@ export default function LandingPage() {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 2, duration: 2 }}
                         >
-                            <p className="text-[3.5rem] font-semibold">
+                            <p className="text-[2rem] font-semibold">
                                 Get the <span className="text-[#5046e6]">care</span> you deserve.
                             </p>
                         </motion.div>
